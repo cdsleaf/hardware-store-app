@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Switch } from 'react-router';
 import Header from './Header';
 import Products from './Products';
+import Carts from './Carts';
 import Footer from './Footer';
 import { handleInitialData } from './../actions/shared';
 
@@ -14,9 +17,14 @@ class MainContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Header />
-        <Products />
-        <Footer />
+        <BrowserRouter>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Products} />
+            <Route path="/cart" component={Carts} />
+          </Switch>
+          <Footer />
+        </BrowserRouter>
       </Fragment>
     );
   }  

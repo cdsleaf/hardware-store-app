@@ -1,18 +1,19 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Header (props) {
 
   return (
     <header>
       <div className="header-link">
-        <a href="index.html" className="home">
+        <NavLink to='/' exact className="home">
           Home
-        </a>
+        </NavLink >
       </div>
       <div className="header-link">
-        <a href="index.html" className="cart">
+        <NavLink to='/cart' className="cart">
           Cart
-        </a>
+        </NavLink>
       </div>    
     </header>
   )
