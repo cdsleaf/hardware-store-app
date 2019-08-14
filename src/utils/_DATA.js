@@ -22,6 +22,6 @@ const products = [
 
 export function _getProducts() {
   return new Promise((res, rej) => {
-    setTimeout(() => res({...products}), 1000)
+    setTimeout(() => res(products), 1000)
   })
 }

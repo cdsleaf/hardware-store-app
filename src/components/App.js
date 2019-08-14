@@ -1,11 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import MainContainer from './MainContainer';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      Hardware Store App!!
-    </div>
+    <MainContainer className="main-container" />
   );
 }
 
-export default App;
+export default connect()(App)
