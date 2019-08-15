@@ -1,6 +1,7 @@
 import { 
   ADD_CARTS,
   REMOVE_CARTS,
+  RESTORE_CARTS_FROM_STORAGE
 } from './../actions/carts'
 
 export default function carts (state={}, action) {
@@ -33,6 +34,8 @@ export default function carts (state={}, action) {
             quantity: state[action.productName]['quantity'] - 1,
           }
         }
+    case RESTORE_CARTS_FROM_STORAGE:
+      return action.carts;
     default:
       return state;
   }

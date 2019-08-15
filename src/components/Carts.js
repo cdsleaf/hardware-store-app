@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeCarts } from './../actions/carts'
+import { removeCarts, restoreCarts } from './../actions/carts'
 
 class Carts extends Component {
 
@@ -10,10 +10,23 @@ class Carts extends Component {
     this.handleDeleteCartClick = this.handleDeleteCartClick.bind(this);
   }
 
+  componentDidMount() {
+
+    const { 
+      cartsArray, 
+      restoreCartsFromStorage 
+    } = this.props;
+
+    const storedCarts = sessionStorage.getItem('HARDWARE_STORE_CARTS');
+
+    if((Object.entries(storedCarts).length !== 0 && storedCarts.constructor !== Object) && cartsArray.length === 0){
+      restoreCartsFromStorage();
+    }
+  }
+
   handleDeleteCartClick(event){
     event.preventDefault();
-    const { dispatch} = this.props;
-    dispatch(removeCarts(event.target.value));
+    this.props.deleteCartClick(event.target.value);
   }
 
   render () {
@@ -64,5 +77,13 @@ const mapStatetoProps = ({ carts }, props) => {
   };
 }
 
-export default connect(mapStatetoProps)(Carts);
+const mapDispatchToProps = dispatch => {
+  const storedCarts = JSON.parse(sessionStorage.getItem('HARDWARE_STORE_CARTS'));
+  return {
+    restoreCartsFromStorage: () => dispatch(restoreCarts(storedCarts)),
+    deleteCartClick: (productName) => dispatch(removeCarts(productName)),
+  }
+}
+
+export default connect(mapStatetoProps, mapDispatchToProps)(Carts);
 

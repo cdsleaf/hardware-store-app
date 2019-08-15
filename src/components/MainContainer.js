@@ -11,7 +11,9 @@ import { handleInitialData } from './../actions/shared';
 class MainContainer extends Component {
 
   componentDidMount() {
-    this.props.getInitialData();
+    const { getInitialData } = this.props;
+
+    getInitialData();
   }
 
   render() {
@@ -30,15 +32,16 @@ class MainContainer extends Component {
   }  
 }
 
-const mapStateToProps = ( state, props ) => {
+const mapStateToProps = ( { carts={} }, props ) => {
   return {
+    carts,
     ...props
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getInitialData: () => dispatch(handleInitialData())
+    getInitialData: () => dispatch(handleInitialData()),
   }
 }
 
