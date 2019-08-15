@@ -1,23 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addCarts } from './../actions/carts';
 
-const Products = props => {
+class Products extends Component {
 
-  const { products } = props;
+  constructor(props){
+    super(props);
 
-  return (
-    <div className="products">
-      {products.map((product, index) => (
-        <div key={index} className="product-card">
-          <div className="product-info">
-            <span className="product-name">{product.name}</span>
-            <span className="product-price">${product.price}</span>
+    this.handleAddCartClick = this.handleAddCartClick.bind(this);
+  }
+
+  handleAddCartClick(event){
+    event.preventDefault();
+    const {products, dispatch} = this.props;
+    const selectedProduct = products.filter(product => product.name === event.target.value);
+    dispatch(addCarts(selectedProduct[0]));
+  }
+  
+
+  render () {
+    const { products } = this.props;
+    return (
+      <div className="products">
+        {products.map((product, index) => (
+          <div key={index} className="product-card">
+            <div className="product-info">
+              <span className="product-name">{product.name}</span>
+              <span className="product-price">${product.price}</span>
+            </div>
+            <button value={product.name} onClick={this.handleAddCartClick}>ADD TO CART</button>
           </div>
-          <button>ADD TO CART</button>
-        </div>
-      ))}
-    </div>
-  )
+        ))}
+      </div>
+    )
+  }  
+  
 }
 
 const mapStatetoProps = ({ products=[] }, props) => {
@@ -28,4 +45,3 @@ const mapStatetoProps = ({ products=[] }, props) => {
 }
 
 export default connect(mapStatetoProps)(Products);
-

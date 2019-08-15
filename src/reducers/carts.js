@@ -3,7 +3,7 @@ import {
   REMOVE_CARTS,
 } from './../actions/carts'
 
-export default function carts (state={}, action) {
+export default function carts (state={}, action) {console.log("a", action.product);
   switch(action.type){
     case ADD_CARTS:
       return {
