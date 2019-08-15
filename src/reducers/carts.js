@@ -3,7 +3,7 @@ import {
   REMOVE_CARTS,
 } from './../actions/carts'
 
-export default function carts (state={}, action) {console.log("a", action.product);
+export default function carts (state={}, action) {
   switch(action.type){
     case ADD_CARTS:
       return {
@@ -16,13 +16,21 @@ export default function carts (state={}, action) {console.log("a", action.produc
         }
       };
     case REMOVE_CARTS:
-      return state[action.product.name]['quantity'] === 1
-        ? state.filter(product => product.name !== action.product.name) 
+      return state[action.productName]['quantity'] === 1
+        ? Object.values(state)
+                .reduce( (newProducts, product) => {
+                   return product.name === action.productName
+                    ? newProducts
+                    : {
+                      ...newProducts,
+                      [product.name]: product,
+                     } 
+                  }, {}) 
         : {
           ...state,
-          [action.product.name]: {
-            ...state[action.product.name],
-            quantity: state[action.product.name]['quantity'] + 1,
+          [action.productName]: {
+            ...state[action.productName],
+            quantity: state[action.productName]['quantity'] - 1,
           }
         }
     default:

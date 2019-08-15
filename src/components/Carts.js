@@ -1,35 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeCarts } from './../actions/carts'
 
-const Carts = props => {
+class Carts extends Component {
 
-  const { cartsArray, CartsSummary } = props;
+  constructor(props){
+    super(props);
 
-  return (
-    <div className="carts">
-      <p>Shopping Cart</p>
-      <hr />
-      {cartsArray.length === 0 ? (
-        <div>
-          <p>No items saved</p>
-        </div>
-      ) : cartsArray.map((cart, index) => (
-        <div key={index} className="cart-card">
-          <div className="cart-info">
-            <span className="cart-name">{cart.name}</span>
-            <span className="cart-quantity">{cart.quantity}</span>
-            <span className="cart-price">${cart.price}</span>
-            <span className="cart-subTotal">${cart.quantity * cart.price}</span>
+    this.handleDeleteCartClick = this.handleDeleteCartClick.bind(this);
+  }
+
+  handleDeleteCartClick(event){
+    event.preventDefault();
+    const { dispatch} = this.props;
+    dispatch(removeCarts(event.target.value));
+  }
+
+  render () {
+    const { cartsArray, CartsSummary } = this.props;
+    return (
+      <div className="carts">
+        <p>Shopping Cart</p>
+        <hr />
+        {cartsArray.length === 0 ? (
+          <div>
+            <p>No items saved</p>
           </div>
-          <button>Delete</button>
+        ) : cartsArray.map((cart, index) => (
+          <div key={index} className="cart-card">
+            <div className="cart-info">
+              <span className="cart-name">{cart.name}</span>
+              <span className="cart-quantity">{cart.quantity}</span>
+              <span className="cart-price">${cart.price}</span>
+              <span className="cart-subTotal">${cart.quantity * cart.price}</span>
+            </div>
+            <button value={cart.name} onClick={this.handleDeleteCartClick}>Delete</button>
+          </div>
+        ))}
+        <hr />
+        <div>
+          <p>Total ({CartsSummary.totalQuantity} item) : NZD ${CartsSummary.totalAmount}</p>
         </div>
-      ))}
-      <hr />
-      <div>
-        <p>Total ({CartsSummary.totalQuantity} item) : NZD ${CartsSummary.totalAmount}</p>
       </div>
-    </div>
-  )
+    )
+  }
+  
 }
 
 const mapStatetoProps = ({ carts }, props) => {
