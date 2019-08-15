@@ -43,9 +43,17 @@ class Carts extends Component {
           <div key={index} className="cart-card">
             <div className="cart-info">
               <span className="cart-name">{cart.name}</span>
-              <span className="cart-quantity">{cart.quantity}</span>
-              <span className="cart-price">${cart.price}</span>
-              <span className="cart-subTotal">${cart.quantity * cart.price}</span>
+              <div className="cart-amount">
+                <div>
+                  <span className="cart-quantity">Qty: {cart.quantity}</span>
+                </div>
+                <div>
+                  <span className="cart-price">${cart.price}</span>
+                </div>
+                <div>
+                  <span className="cart-subTotal">${cart.quantity * cart.price}</span>
+                </div>
+              </div>  
             </div>
             <button value={cart.name} onClick={this.handleDeleteCartClick}>Delete</button>
           </div>

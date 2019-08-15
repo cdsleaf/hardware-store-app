@@ -58,6 +58,24 @@ header {
   }
 }
 
+.cart-card {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0; 
+}
+
+.cart-info {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.cart-amount {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
 footer {
   width: 100%;
   padding: 1rem;
